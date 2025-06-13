@@ -24,6 +24,16 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="NewRecord"
+          options={{
+            title: "New Record",
+            headerStyle: {
+              backgroundColor: colorScheme === "dark" ? "#121212" : "#fff",
+            },
+            headerTintColor: colorScheme === "dark" ? "#fff" : "#000",
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

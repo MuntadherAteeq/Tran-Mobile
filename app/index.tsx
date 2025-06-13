@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import React from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { HomeTab } from "../components/Tabs/HomeTab";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -30,7 +31,6 @@ export default function MyTabs() {
             //       iconName = "help";
             //       break;
             //   }
-
             //   // You can return any component that you like here!
             //   return <MaterialIcons name={iconName} size={24} color={color} />;
             // },
@@ -38,24 +38,12 @@ export default function MyTabs() {
             tabBarInactiveTintColor: "gray",
           })}
         >
-          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Home" component={HomeTab} />
           <Tab.Screen name="Profile" component={ProfileScreen} />
           <Tab.Screen name="Settings" component={SettingsScreen} />
         </Tab.Navigator>
       </SafeAreaView>
     </SafeAreaProvider>
-  );
-}
-// Home Screen Component
-function HomeScreen() {
-  return (
-    <View style={styles.content}>
-      <Text style={styles.title}>Home</Text>
-      <Text style={styles.subtitle}>Welcome to the Home tab</Text>
-      <Text style={styles.description}>
-        This is the main screen of your app. You can add your home content here.
-      </Text>
-    </View>
   );
 }
 
