@@ -3,7 +3,7 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-const root = {
+export const root = {
   text: "#11181C",
   background: "#f2f2f2",
   tint: "#0a7ea4",

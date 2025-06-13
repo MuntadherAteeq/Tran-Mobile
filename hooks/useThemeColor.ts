@@ -4,8 +4,10 @@
  */
 
 import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { useColorScheme as useRNColorScheme } from "react-native";
+import {
+  useColorScheme,
+  useColorScheme as useRNColorScheme,
+} from "react-native";
 
 // Type for the color variables object
 export type ColorsVariables = typeof Colors.light;
