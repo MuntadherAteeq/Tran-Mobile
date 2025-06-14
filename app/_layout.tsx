@@ -23,7 +23,10 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="NewRecord" options={{ title: "New Record" }} />
+        <Stack.Screen
+          name="add-record"
+          options={{ title: "Customer Information" }}
+        />
       </Stack>
     </ThemeProvider>
   );

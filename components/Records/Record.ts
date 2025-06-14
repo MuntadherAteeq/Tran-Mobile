@@ -1,28 +1,31 @@
 export default class Record {
   id: string;
-  name?: string;
-  date?: string;
+  name: string;
+  date: string;
   description: string;
   total_amount: number;
   phone: string;
   avatar: string;
+  email: string;
 
   constructor(
-    id: string,
-    name: string,
+    id?: string,
+    name?: string,
     date?: string,
     description?: string,
     phone?: string,
     avatar?: string,
-    total_amount?: number
+    total_amount?: number,
+    email?: string
   ) {
-    this.id = id;
+    this.id = id || "0";
     this.name = name || "Unknown";
     this.date = date ? date : new Date().toISOString();
     this.description = description ? description : "";
     this.total_amount = total_amount || 0;
     this.phone = phone || "";
-    this.avatar = avatar || "https://placehold.co/62x62"; // Default avatar URL
+    this.avatar = avatar || "https://placehold.co/62x62";
+    this.email = email || "";
   }
 }
 

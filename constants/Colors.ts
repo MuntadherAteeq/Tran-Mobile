@@ -10,6 +10,9 @@ export const root = {
   icon: "#687076",
   tabIconDefault: "#687076",
   tabIconSelected: "#fff",
+  primary: "#0a7ea4",
+  card: "#fff",
+  border: "#E0E0E0",
 };
 
 export const Colors: { [key: string]: typeof root } = {
@@ -20,6 +23,8 @@ export const Colors: { [key: string]: typeof root } = {
     icon: "#687076",
     tabIconDefault: "#687076",
     // Add more colors as needed
+    card: "#fff",
+    border: "#E0E0E0",
   },
   dark: {
     ...root,
@@ -27,5 +32,7 @@ export const Colors: { [key: string]: typeof root } = {
     background: "#151718",
     icon: "#9BA1A6",
     tabIconDefault: "#9BA1A6",
+    card: "#0f0f0f",
+    border: "#2C2F33",
   },
 };
