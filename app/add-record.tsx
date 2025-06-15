@@ -1,8 +1,10 @@
+import ContactPickerModal from "@/components/ContactPickerModal";
 import Record from "@/components/Records/Record";
 import { Text, View } from "@/components/UI";
 import { Colors } from "@/constants/Colors";
 import { useColors } from "@/hooks/useThemeColor";
 import { useCameraPermissions } from "expo-camera";
+import * as Contacts from "expo-contacts";
 import * as ImagePicker from "expo-image-picker";
 import { Calendar, Camera, Mail, Phone, Save, User } from "lucide-react-native";
 import React, { useState } from "react";
@@ -23,6 +25,7 @@ const CustomerForm = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const [CameraPermission, requestCameraPermission] = useCameraPermissions();
+  const [showContactModal, setShowContactModal] = useState(false);
 
   const colors = useColors();
   const styles = createStyles(colors);
@@ -58,6 +61,23 @@ const CustomerForm = () => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const importFromContacts = async () => {
+    const { status } = await Contacts.requestPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("Permission Denied", "Cannot access contacts.");
+      return;
+    }
+
+    const { data } = await Contacts.getContactsAsync({
+      fields: [Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers],
+    });
+    if (data.length > 0) {
+      setShowContactModal(true);
+    } else {
+      Alert.alert("No Contacts", "No contacts found in your address book.");
+    }
   };
 
   const handleInputChange = (field: keyof Record, value: string) => {
@@ -137,24 +157,39 @@ const CustomerForm = () => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.form}>
+          <TouchableOpacity
+            style={styles.importButton}
+            onPress={importFromContacts}
+          >
+            <Text style={styles.importButtonText}>Import from Contacts</Text>
+          </TouchableOpacity>
+
           {/* Avatar Section */}
-          <View style={styles.avatarSection}>
-            <TouchableOpacity
-              style={styles.avatarContainer}
-              onPress={handleImagePicker}
-            >
-              {formData.avatar ? (
-                <Image
-                  source={{ uri: formData.avatar }}
-                  style={styles.avatar}
-                />
-              ) : (
-                <View style={styles.avatarPlaceholder}>
-                  <Camera size={24} color="#666" />
-                  <Text style={styles.avatarText}>Add Photo</Text>
-                </View>
-              )}
-            </TouchableOpacity>
+          <View style={styles.CustomerCard}>
+            <View>
+              <TouchableOpacity
+                style={styles.avatarContainer}
+                onPress={handleImagePicker}
+              >
+                {formData.avatar ? (
+                  <Image
+                    source={{ uri: formData.avatar }}
+                    style={styles.avatar}
+                  />
+                ) : (
+                  <View style={styles.avatarPlaceholder}>
+                    <Camera size={24} color="#666" />
+                    <Text style={styles.avatarText}>Add Photo</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+            <View style={styles.avatarTextContainer}>
+              <Text style={{ fontSize: 17 }}>{formData.name}</Text>
+              <Text style={{ fontSize: 12, color: colors.subText }}>
+                {formData.phone}
+              </Text>
+            </View>
           </View>
 
           {/* Name Field - Required */}
@@ -239,6 +274,19 @@ const CustomerForm = () => {
           </View>
         </View>
       </ScrollView>
+      <ContactPickerModal
+        visible={showContactModal}
+        onClose={() => setShowContactModal(false)}
+        onSelect={(contact) => {
+          setFormData((prev) => ({
+            ...prev,
+            name: contact.name,
+            phone: contact.phone ?? "",
+            email: contact.email ?? "",
+          }));
+          setShowContactModal(false);
+        }}
+      />
     </KeyboardAvoidingView>
   );
 };
@@ -247,10 +295,10 @@ const createStyles = (colors: Colors) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
     },
     scrollView: {
       flex: 1,
+      backgroundColor: colors.background,
     },
     header: {
       backgroundColor: colors.background,
@@ -284,14 +332,27 @@ const createStyles = (colors: Colors) => {
       shadowRadius: 3.84,
       elevation: 5,
     },
-    avatarSection: {
+    CustomerCard: {
+      flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
+      borderColor: colors.border,
+      borderWidth: 1,
       marginBottom: 24,
+      padding: 16,
+      borderRadius: 12,
+    },
+    avatarTextContainer: {
+      flex: 1,
+
+      marginLeft: 16,
+      justifyContent: "center",
     },
     avatarContainer: {
-      width: 100,
-      height: 100,
+      width: 80,
+      height: 80,
       borderRadius: 50,
+
       overflow: "hidden",
       borderWidth: 1,
       borderColor: "#ddd",
@@ -389,6 +450,18 @@ const createStyles = (colors: Colors) => {
       gap: 8,
     },
     submitButtonText: {
+      color: "#fff",
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    importButton: {
+      backgroundColor: "#2ecc71",
+      paddingVertical: 10,
+      borderRadius: 8,
+      marginBottom: 20,
+      alignItems: "center",
+    },
+    importButtonText: {
       color: "#fff",
       fontSize: 16,
       fontWeight: "600",

@@ -2,6 +2,7 @@ import { CurvedNavBar } from "@/components/CurvedNavBar";
 import HistoryTab from "@/components/Tabs/HistoryTab";
 import { HomeTab } from "@/components/Tabs/HomeTab";
 import PocketTab from "@/components/Tabs/PocketTab";
+import { useColors } from "@/hooks/useThemeColor";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { router } from "expo-router";
 import React from "react";
@@ -10,14 +11,28 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
+  const colors = useColors();
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarScrollEnabled: false,
-            tabBarActiveTintColor: "#007AFF",
-            tabBarInactiveTintColor: "gray",
+            tabBarActiveTintColor: colors.primary,
+            tabBarInactiveTintColor: colors.subText,
+            tabBarIndicatorStyle: {
+              backgroundColor: colors.primary,
+              height: 3,
+            },
+            tabBarStyle: {
+              backgroundColor: colors.card,
+              borderBottomWidth: 0,
+              shadowColor: "black",
+              shadowOffset: { width: 0, height: 4 }, // increased height
+              shadowOpacity: 1, // increased opacity
+              shadowRadius: 6, // increased radius for more blur
+              elevation: 8, // for Android shadow
+            },
           })}
         >
           <Tab.Screen name="Home" component={HomeTab} />

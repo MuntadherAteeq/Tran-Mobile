@@ -18,7 +18,11 @@ export default function RecordListItem(props: { record: Record }) {
         <Text style={styles.dateText}>{date}</Text>
         <Text style={styles.nameText}>{name}</Text>
         <Image
-          source={avatar !== "" ? { uri: avatar } : require("../../assets/images/Avatar.png")}
+          source={
+            avatar !== ""
+              ? { uri: avatar }
+              : require("../../assets/images/Avatar.png")
+          }
           style={styles.avatar}
           resizeMode="cover"
         />
@@ -113,7 +117,7 @@ const createStyles = (colors: ReturnType<typeof useColors>) =>
       bottom: 0,
       height: 1,
       width: "100%",
-      backgroundColor: "#27272a",
+      backgroundColor: "#303030",
       opacity: 0.5,
     },
   });
