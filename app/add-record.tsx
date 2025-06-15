@@ -1,4 +1,7 @@
 import Record from "@/components/Records/Record";
+import { Text, View } from "@/components/UI";
+import { Colors } from "@/constants/Colors";
+import { useColors } from "@/hooks/useThemeColor";
 import { useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { Calendar, Camera, Mail, Phone, Save, User } from "lucide-react-native";
@@ -10,10 +13,8 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from "react-native";
 
 const CustomerForm = () => {
@@ -23,6 +24,8 @@ const CustomerForm = () => {
 
   const [CameraPermission, requestCameraPermission] = useCameraPermissions();
 
+  const colors = useColors();
+  const styles = createStyles(colors);
   const validateForm = () => {
     const newErrors = {
       id: "",
@@ -78,7 +81,7 @@ const CustomerForm = () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ["images"],
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 4],
         quality: 1,
       });
 
@@ -240,156 +243,157 @@ const CustomerForm = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  scrollView: {
-    flex: 1,
-  },
-  header: {
-    backgroundColor: "#fff",
-    paddingTop: 60,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#666",
-  },
-  form: {
-    backgroundColor: "#fff",
-    margin: 16,
-    borderRadius: 12,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+const createStyles = (colors: Colors) => {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  avatarSection: {
-    alignItems: "center",
-    marginBottom: 24,
-  },
-  avatarContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "#ddd",
-  },
-  avatar: {
-    width: "100%",
-    height: "100%",
-  },
-  avatarPlaceholder: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#f0f0f0",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 2,
-    borderColor: "#ddd",
-    borderStyle: "dashed",
-  },
-  avatarText: {
-    marginTop: 4,
-    fontSize: 12,
-    color: "#666",
-  },
-  inputGroup: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: 8,
-  },
-  required: {
-    color: "#e74c3c",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    backgroundColor: "#fff",
-  },
-  disabledInput: {
-    backgroundColor: "#f9f9f9",
-  },
-  inputIcon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: "#333",
-  },
-  dateText: {
-    flex: 1,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: "#666",
-  },
-  errorText: {
-    color: "#e74c3c",
-    fontSize: 12,
-    marginTop: 4,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 20,
-    gap: 12,
-  },
-  resetButton: {
-    flex: 1,
-    paddingVertical: 12,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  resetButtonText: {
-    color: "#666",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  submitButton: {
-    flex: 2,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 12,
-    backgroundColor: "#3498db",
-    borderRadius: 8,
-    gap: 8,
-  },
-  submitButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-});
+    scrollView: {
+      flex: 1,
+    },
+    header: {
+      backgroundColor: colors.background,
+      paddingTop: 60,
+      paddingBottom: 20,
+      paddingHorizontal: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 4,
+    },
+    subtitle: {
+      fontSize: 14,
+      color: colors.subText,
+    },
+    form: {
+      backgroundColor: colors.background,
+      margin: 16,
+      borderRadius: 12,
+      padding: 20,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    avatarSection: {
+      alignItems: "center",
+      marginBottom: 24,
+    },
+    avatarContainer: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      overflow: "hidden",
+      borderWidth: 1,
+      borderColor: "#ddd",
+    },
+    avatar: {
+      width: "100%",
+      height: "100%",
+    },
+    avatarPlaceholder: {
+      width: "100%",
+      height: "100%",
+      backgroundColor: colors.input,
+      justifyContent: "center",
+      alignItems: "center",
+      borderWidth: 2,
+      borderColor: colors.border,
+    },
+    avatarText: {
+      marginTop: 4,
+      fontSize: 12,
+      color: "#666",
+    },
+    inputGroup: {
+      marginBottom: 20,
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: "#333",
+      marginBottom: 8,
+    },
+    required: {
+      color: "#e74c3c",
+    },
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      borderWidth: 1,
+      borderColor: colors.border,
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      backgroundColor: colors.input,
+    },
+    disabledInput: {
+      backgroundColor: "#f9f9f9",
+    },
+    inputIcon: {
+      marginRight: 10,
+    },
+    input: {
+      flex: 1,
+      paddingVertical: 12,
+      fontSize: 16,
+      color: colors.text,
+    },
+    dateText: {
+      flex: 1,
+      paddingVertical: 12,
+      fontSize: 16,
+      color: "#666",
+    },
+    errorText: {
+      color: "#e74c3c",
+      fontSize: 12,
+      marginTop: 4,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 20,
+      gap: 12,
+    },
+    resetButton: {
+      flex: 1,
+      paddingVertical: 12,
+      borderWidth: 1,
+      borderColor: "#ddd",
+      borderRadius: 8,
+      alignItems: "center",
+      backgroundColor: "#fff",
+    },
+    resetButtonText: {
+      color: "#666",
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    submitButton: {
+      flex: 2,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      paddingVertical: 12,
+      backgroundColor: "#3498db",
+      borderRadius: 8,
+      gap: 8,
+    },
+    submitButtonText: {
+      color: "#fff",
+      fontSize: 16,
+      fontWeight: "600",
+    },
+  });
+};
 
 export default CustomerForm;

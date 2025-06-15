@@ -24,7 +24,7 @@ export const CurvedNavBar: React.FC<CurvedNavBarProps> = ({
           <Settings color={colors.icon} size={28} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.plusButton} onPress={onPlusPress}>
-          <View style={[styles.circle, { backgroundColor: colors.tint }]}>
+          <View style={[styles.circle, { backgroundColor: colors.primary }]}>
             <Plus color={colors.background} size={32} />
           </View>
         </TouchableOpacity>
