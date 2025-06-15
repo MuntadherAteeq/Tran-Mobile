@@ -18,7 +18,7 @@ export default function RecordListItem(props: { record: Record }) {
         <Text style={styles.dateText}>{date}</Text>
         <Text style={styles.nameText}>{name}</Text>
         <Image
-          source={{ uri: avatar }}
+          source={avatar !== "" ? { uri: avatar } : require("../../assets/images/Avatar.png")}
           style={styles.avatar}
           resizeMode="cover"
         />

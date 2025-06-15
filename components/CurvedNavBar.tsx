@@ -1,8 +1,8 @@
 import { useColors } from "@/hooks/useThemeColor";
 import { Plus, Settings, User } from "lucide-react-native";
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ThemedView } from "./ThemedView";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
+import { View } from "./UI";
 
 interface CurvedNavBarProps {
   onUserPress?: () => void;
@@ -18,8 +18,8 @@ export const CurvedNavBar: React.FC<CurvedNavBarProps> = ({
   const colors = useColors();
 
   return (
-    <ThemedView style={{ height: 72 }}>
-      <ThemedView style={{ ...styles.container, backgroundColor: colors.card }}>
+    <View style={{ height: 72 }}>
+      <View style={{ ...styles.container, backgroundColor: colors.card }}>
         <TouchableOpacity style={styles.iconButton} onPress={onUserPress}>
           <Settings color={colors.icon} size={28} />
         </TouchableOpacity>
@@ -31,8 +31,8 @@ export const CurvedNavBar: React.FC<CurvedNavBarProps> = ({
         <TouchableOpacity style={styles.iconButton} onPress={onSettingsPress}>
           <User color={colors.icon} size={28} />
         </TouchableOpacity>
-      </ThemedView>
-    </ThemedView>
+      </View>
+    </View>
   );
 };
 

@@ -82,10 +82,16 @@ const CustomerForm = () => {
         quality: 1,
       });
 
-      console.log(result);
+      if (result.canceled) {
+        return;
+      }
 
       if (!result.canceled) {
         formData.avatar = result.assets[0].uri;
+        setFormData((prev) => ({
+          ...prev,
+          avatar: result.assets[0].uri,
+        }));
       }
     };
     pickImage();
