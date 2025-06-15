@@ -1,25 +1,22 @@
 import { FlatList } from "react-native";
-import { ThemedText } from "../ThemedText";
-import { ThemedView } from "../ThemedView";
+import { Text, View } from "../UI";
 
 export default function PocketTab() {
   return (
-    <ThemedView
-      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-    >
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <FlatList
         data={[{ id: "1" }, { id: "2" }, { id: "3" }]}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <ThemedView
+          <View
             style={{
               height: 100,
               borderRadius: 10,
               margin: 10,
             }}
           >
-            <ThemedText style={{ padding: 10 }}>Item {item.id}</ThemedText>
-          </ThemedView>
+            <Text style={{ padding: 10 }}>Item {item.id}</Text>
+          </View>
         )}
         style={{
           width: "100%",
@@ -28,6 +25,6 @@ export default function PocketTab() {
           borderRadius: 10,
         }}
       ></FlatList>
-    </ThemedView>
+    </View>
   );
 }
