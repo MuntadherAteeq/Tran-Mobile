@@ -17,6 +17,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CustomerForm = () => {
   const [formData, setFormData] = useState(new Record());
@@ -140,153 +141,160 @@ const CustomerForm = () => {
 
   const handleReset = () => {
     setFormData(
-      new Record("", "", new Date().toISOString(), "", "", "", 0, "")
+      new Record("", "", "", "", new Date().toISOString(), "", "", 0)
     );
     setErrors({});
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <View style={styles.form}>
-          <TouchableOpacity
-            style={styles.importButton}
-            onPress={importFromContacts}
-          >
-            <Text style={styles.importButtonText}>Import from Contacts</Text>
-          </TouchableOpacity>
+        <ScrollView
+          style={styles.scrollView}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.form}>
+            <TouchableOpacity
+              style={styles.importButton}
+              onPress={importFromContacts}
+            >
+              <Text style={styles.importButtonText}>Import from Contacts</Text>
+            </TouchableOpacity>
 
-          {/* Avatar Section */}
-          <View style={styles.CustomerCard}>
-            <View>
+            {/* Avatar Section */}
+            <View style={styles.CustomerCard}>
+              <View>
+                <TouchableOpacity
+                  style={styles.avatarContainer}
+                  onPress={handleImagePicker}
+                >
+                  {formData.avatar ? (
+                    <Image
+                      source={{ uri: formData.avatar }}
+                      style={styles.avatar}
+                    />
+                  ) : (
+                    <View style={styles.avatarPlaceholder}>
+                      <Camera size={24} color="#666" />
+                      <Text style={styles.avatarText}>Add Photo</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              </View>
+              <View style={styles.avatarTextContainer}>
+                <Text style={{ fontSize: 17 }}>{formData.name}</Text>
+                <Text style={{ fontSize: 12, color: colors.subText }}>
+                  {formData.phone}
+                </Text>
+              </View>
+            </View>
+
+            {/* Name Field - Required */}
+            <View style={styles.inputGroup}>
+              <Text style={[styles.label, styles.required]}>Full Name *</Text>
+              <View style={styles.inputContainer}>
+                <User size={20} color="#666" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  value={formData.name}
+                  onChangeText={(value) => handleInputChange("name", value)}
+                  placeholder="Enter full name"
+                  placeholderTextColor="#999"
+                />
+              </View>
+              {errors.name && (
+                <Text style={styles.errorText}>{errors.name}</Text>
+              )}
+            </View>
+
+            {/* Phone Field - Optional */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Phone Number</Text>
+              <View style={styles.inputContainer}>
+                <Phone size={20} color="#666" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  value={formData.phone}
+                  onChangeText={(value) => handleInputChange("phone", value)}
+                  placeholder="Enter phone number"
+                  placeholderTextColor="#999"
+                  keyboardType="phone-pad"
+                />
+              </View>
+              {errors.phone && (
+                <Text style={styles.errorText}>{errors.phone}</Text>
+              )}
+            </View>
+
+            {/* Email Field - Optional */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Email Address</Text>
+              <View style={styles.inputContainer}>
+                <Mail size={20} color="#666" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  value={formData.email}
+                  onChangeText={(value) => handleInputChange("email", value)}
+                  placeholder="Enter email address"
+                  placeholderTextColor="#999"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+              {errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
+            </View>
+
+            {/* Date Field - Auto-filled */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Date Created</Text>
+              <View style={[styles.inputContainer, styles.disabledInput]}>
+                <Calendar size={20} color="#666" style={styles.inputIcon} />
+                <Text style={styles.dateText}>
+                  {new Date().toLocaleDateString()}
+                </Text>
+              </View>
+            </View>
+
+            {/* Action Buttons */}
+            <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={styles.avatarContainer}
-                onPress={handleImagePicker}
+                style={styles.resetButton}
+                onPress={handleReset}
               >
-                {formData.avatar ? (
-                  <Image
-                    source={{ uri: formData.avatar }}
-                    style={styles.avatar}
-                  />
-                ) : (
-                  <View style={styles.avatarPlaceholder}>
-                    <Camera size={24} color="#666" />
-                    <Text style={styles.avatarText}>Add Photo</Text>
-                  </View>
-                )}
+                <Text style={styles.resetButtonText}>Reset</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleSubmit}
+              >
+                <Save size={18} color="#fff" />
+                <Text style={styles.submitButtonText}>Save Customer</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.avatarTextContainer}>
-              <Text style={{ fontSize: 17 }}>{formData.name}</Text>
-              <Text style={{ fontSize: 12, color: colors.subText }}>
-                {formData.phone}
-              </Text>
-            </View>
           </View>
+        </ScrollView>
 
-          {/* Name Field - Required */}
-          <View style={styles.inputGroup}>
-            <Text style={[styles.label, styles.required]}>Full Name *</Text>
-            <View style={styles.inputContainer}>
-              <User size={20} color="#666" style={styles.inputIcon} />
-              <TextInput
-                style={styles.input}
-                value={formData.name}
-                onChangeText={(value) => handleInputChange("name", value)}
-                placeholder="Enter full name"
-                placeholderTextColor="#999"
-              />
-            </View>
-            {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
-          </View>
-
-          {/* Phone Field - Optional */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Phone Number</Text>
-            <View style={styles.inputContainer}>
-              <Phone size={20} color="#666" style={styles.inputIcon} />
-              <TextInput
-                style={styles.input}
-                value={formData.phone}
-                onChangeText={(value) => handleInputChange("phone", value)}
-                placeholder="Enter phone number"
-                placeholderTextColor="#999"
-                keyboardType="phone-pad"
-              />
-            </View>
-            {errors.phone && (
-              <Text style={styles.errorText}>{errors.phone}</Text>
-            )}
-          </View>
-
-          {/* Email Field - Optional */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Email Address</Text>
-            <View style={styles.inputContainer}>
-              <Mail size={20} color="#666" style={styles.inputIcon} />
-              <TextInput
-                style={styles.input}
-                value={formData.email}
-                onChangeText={(value) => handleInputChange("email", value)}
-                placeholder="Enter email address"
-                placeholderTextColor="#999"
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-            </View>
-            {errors.email && (
-              <Text style={styles.errorText}>{errors.email}</Text>
-            )}
-          </View>
-
-          {/* Date Field - Auto-filled */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Date Created</Text>
-            <View style={[styles.inputContainer, styles.disabledInput]}>
-              <Calendar size={20} color="#666" style={styles.inputIcon} />
-              <Text style={styles.dateText}>
-                {new Date().toLocaleDateString()}
-              </Text>
-            </View>
-          </View>
-
-          {/* Action Buttons */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-              <Text style={styles.resetButtonText}>Reset</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.submitButton}
-              onPress={handleSubmit}
-            >
-              <Save size={18} color="#fff" />
-              <Text style={styles.submitButtonText}>Save Customer</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-
-      <ContactPickerModal
-        visible={showContactModal}
-        onClose={() => setShowContactModal(false)}
-        onSelect={(contact) => {
-          setFormData((prev) => ({
-            ...prev,
-            name: contact.name,
-            phone: contact.phone ?? "",
-            email: contact.email ?? "",
-          }));
-          setShowContactModal(false);
-        }}
-      />
-    </KeyboardAvoidingView>
+        <ContactPickerModal
+          visible={showContactModal}
+          onClose={() => setShowContactModal(false)}
+          onSelect={(contact) => {
+            setFormData((prev) => ({
+              ...prev,
+              name: contact.name,
+              phone: contact.phone ?? "",
+              email: contact.email ?? "",
+            }));
+            setShowContactModal(false);
+          }}
+        />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

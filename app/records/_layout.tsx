@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import { Stack, usePathname } from "expo-router";
 
 export default function RecordsLayout() {
@@ -9,12 +10,7 @@ export default function RecordsLayout() {
         headerShown: false,
       }}
     >
-      <Stack.Screen
-        name="[id]"
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Screen name="[id]" />
     </Stack>
   );
 }

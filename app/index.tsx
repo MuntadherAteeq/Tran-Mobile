@@ -6,15 +6,15 @@ import { useColors } from "@/hooks/useThemeColor";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { router } from "expo-router";
 import React from "react";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function MyTabs() {
   const colors = useColors();
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+    <>
+      <SafeAreaView style={{ flex: 1 }}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarScrollEnabled: false,
@@ -45,6 +45,6 @@ export default function MyTabs() {
           onSettingsPress={() => console.log("Settings Pressed")}
         />
       </SafeAreaView>
-    </SafeAreaProvider>
+    </>
   );
 }
