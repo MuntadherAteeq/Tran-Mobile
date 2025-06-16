@@ -99,8 +99,6 @@ const createStyles = (colors: ReturnType<typeof useColors>) =>
       borderRadius: 32,
       position: "absolute",
       right: 0,
-      borderWidth: 1,
-      borderColor: "gray",
     },
     amountText: {
       fontSize: 16,

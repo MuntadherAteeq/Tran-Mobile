@@ -19,7 +19,7 @@ export default class Record {
     email?: string
   ) {
     this.id = id || "0";
-    this.name = name || "Unknown";
+    this.name = name || "";
     this.date = date ? date : new Date().toISOString();
     this.description = description ? description : "";
     this.total_amount = total_amount || 0;

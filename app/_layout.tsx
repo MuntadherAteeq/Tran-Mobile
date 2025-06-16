@@ -27,6 +27,17 @@ export default function RootLayout() {
           name="add-record"
           options={{ title: "Customer Information" }}
         />
+        <Stack.Screen
+          name="records/[id]"
+          options={{
+            title: "Record Details",
+            headerShown: false,
+            headerTitleStyle: {
+              fontFamily: "SpaceMono",
+              fontSize: 20,
+            },
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

@@ -4,11 +4,17 @@ export default function RecordsLayout() {
   const route = usePathname();
 
   return (
-    <Stack.Screen
-      name="[id]"
-      options={{
-        title: "Record Details",
+    <Stack
+      screenOptions={{
+        headerShown: false,
       }}
-    />
+    >
+      <Stack.Screen
+        name="[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack>
   );
 }

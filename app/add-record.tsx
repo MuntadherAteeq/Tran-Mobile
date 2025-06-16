@@ -3,7 +3,6 @@ import Record from "@/components/Records/Record";
 import { Text, View } from "@/components/UI";
 import { Colors } from "@/constants/Colors";
 import { useColors } from "@/hooks/useThemeColor";
-import { useCameraPermissions } from "expo-camera";
 import * as Contacts from "expo-contacts";
 import * as ImagePicker from "expo-image-picker";
 import { Calendar, Camera, Mail, Phone, Save, User } from "lucide-react-native";
@@ -24,7 +23,6 @@ const CustomerForm = () => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const [CameraPermission, requestCameraPermission] = useCameraPermissions();
   const [showContactModal, setShowContactModal] = useState(false);
 
   const colors = useColors();
@@ -274,6 +272,7 @@ const CustomerForm = () => {
           </View>
         </View>
       </ScrollView>
+
       <ContactPickerModal
         visible={showContactModal}
         onClose={() => setShowContactModal(false)}
@@ -298,7 +297,7 @@ const createStyles = (colors: Colors) => {
     },
     scrollView: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.input,
     },
     header: {
       backgroundColor: colors.background,
@@ -397,7 +396,7 @@ const createStyles = (colors: Colors) => {
       backgroundColor: colors.input,
     },
     disabledInput: {
-      backgroundColor: "#f9f9f9",
+      backgroundColor: colors.input,
     },
     inputIcon: {
       marginRight: 10,
@@ -422,7 +421,6 @@ const createStyles = (colors: Colors) => {
     buttonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 20,
       gap: 12,
     },
     resetButton: {
