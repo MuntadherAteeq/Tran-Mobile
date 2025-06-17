@@ -1,9 +1,9 @@
-import { useRecords } from "@/hooks/useRecords";
 import { useColors } from "@/hooks/useThemeColor";
 import { Link } from "expo-router";
 import React from "react";
 import { FlatList } from "react-native";
 import RecordListItem from "../Records/Record-List-Item";
+import { useRecords } from "@/models/Record";
 
 // Home Screen Component
 export function HomeTab() {

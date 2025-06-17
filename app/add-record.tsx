@@ -1,9 +1,8 @@
 import ContactPickerModal from "@/components/ContactPickerModal";
 import { Text, View } from "@/components/UI";
 import { Colors } from "@/constants/Colors";
-import { useRecords } from "@/hooks/useRecords";
 import { useColors } from "@/hooks/useThemeColor";
-import { Record } from "@/models/Record";
+import { Record, useRecords } from "@/models/Record";
 import * as Contacts from "expo-contacts";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
