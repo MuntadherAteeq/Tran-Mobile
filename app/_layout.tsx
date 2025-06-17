@@ -1,3 +1,4 @@
+import { RecordProvider } from "@/hooks/useRecords";
 import {
   DarkTheme,
   DefaultTheme,
@@ -22,30 +23,32 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaProvider  style={{ flex: 1 }}  >
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="index" />
-          <Stack.Screen
-            name="add-record"
-            options={{ title: "Customer Information" }}
-          />
-          <Stack.Screen
-            name="records/[id]"
-            options={{
-              title: "Record Details",
-              headerShown: true,
-              headerTitleStyle: {
-                fontFamily: "SpaceMono",
-                fontSize: 20,
-              },
+      <RecordProvider>
+        <SafeAreaProvider style={{ flex: 1 }}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
             }}
-          />
-        </Stack>
-      </SafeAreaProvider>
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen
+              name="add-record"
+              options={{ title: "Customer Information" }}
+            />
+            <Stack.Screen
+              name="records/[id]"
+              options={{
+                title: "Record Details",
+                headerShown: true,
+                headerTitleStyle: {
+                  fontFamily: "SpaceMono",
+                  fontSize: 20,
+                },
+              }}
+            />
+          </Stack>
+        </SafeAreaProvider>
+      </RecordProvider>
     </ThemeProvider>
   );
 }

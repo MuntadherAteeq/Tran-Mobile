@@ -1,25 +1,32 @@
+import { useRecords } from "@/hooks/useRecords";
 import { useColors } from "@/hooks/useThemeColor";
 import { Link } from "expo-router";
 import React from "react";
 import { FlatList } from "react-native";
-import { records } from "../Records/Record";
 import RecordListItem from "../Records/Record-List-Item";
 
 // Home Screen Component
 export function HomeTab() {
   const colors = useColors();
+  const { records } = useRecords();
   return (
     <FlatList
       data={records}
-      keyExtractor={(item) => item.id}
-      style={{ backgroundColor: colors.background }}
       renderItem={({ item }) => (
-        <>
-          <Link href={`/records/${item.id}`}>
-            <RecordListItem record={item} />
-          </Link>
-        </>
+        <Link
+          href={`/records/${item.id}`}
+          style={{
+            backgroundColor: colors.card,
+            padding: 10,
+            borderRadius: 8,
+            marginVertical: 5,
+          }}
+        >
+          <RecordListItem record={item} />
+        </Link>
       )}
+      keyExtractor={(item) => item.id.toString()}
+      contentContainerStyle={{ padding: 10 }}
     />
   );
 }

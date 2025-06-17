@@ -1,6 +1,6 @@
 import { useColors } from "@/hooks/useThemeColor";
 import { Image, StyleSheet, Text, View } from "react-native";
-import Record from "./Record";
+import { Record } from "../../models/Record";
 
 export default function RecordListItem(props: { record: Record }) {
   const { date, name, id, phone, total_amount, description, avatar } =

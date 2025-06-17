@@ -1,4 +1,4 @@
-export default class Record {
+export class Record {
   id: string;
   name: string;
   date: string;
@@ -30,16 +30,3 @@ export default class Record {
     this.email = email || "";
   }
 }
-
-export const records: Record[] = [
-  new Record(
-    "1",
-    "John Doe",
-    "123-456-7890",
-    "example@gmail.com",
-    "2023-10-01T12:00:00Z",
-    "",
-    "Description for John Doe",
-    150.75
-  ),
-];

@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import { Stack, usePathname } from "expo-router";
 
 export default function RecordsLayout() {

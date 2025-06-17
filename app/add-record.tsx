@@ -1,10 +1,12 @@
 import ContactPickerModal from "@/components/ContactPickerModal";
-import Record from "@/components/Records/Record";
 import { Text, View } from "@/components/UI";
 import { Colors } from "@/constants/Colors";
+import { useRecords } from "@/hooks/useRecords";
 import { useColors } from "@/hooks/useThemeColor";
+import { Record } from "@/models/Record";
 import * as Contacts from "expo-contacts";
 import * as ImagePicker from "expo-image-picker";
+import { router } from "expo-router";
 import { Calendar, Camera, Mail, Phone, Save, User } from "lucide-react-native";
 import React, { useState } from "react";
 import {
@@ -12,6 +14,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -38,25 +41,17 @@ const CustomerForm = () => {
       date: "",
     };
 
-    if (!formData.id.trim()) {
-      newErrors.id = "ID is required";
-    }
-
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
     }
 
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
+    // if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+    //   newErrors.email = "Please enter a valid email address";
+    // }
 
-    if (formData.phone && !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid phone number";
-    }
-
-    if (formData.total_amount && isNaN(formData.total_amount)) {
-      newErrors.total_amount = "Please enter a valid amount";
-    }
+    // if (formData.phone && !/^\+?[\d\s\-\(\)]+$/.test(formData.phone)) {
+    //   newErrors.phone = "Please enter a valid phone number";
+    // }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -119,23 +114,37 @@ const CustomerForm = () => {
     pickImage();
   };
 
+  const { records, addRecord } = useRecords();
+
   const handleSubmit = () => {
+    Alert.alert(
+      "Confirm Save",
+      "Are you sure you want to save this customer?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Save",
+          onPress: () => {
+            addRecord(formData);
+            setFormData(
+              new Record("", "", "", "", new Date().toISOString(), "", "", 0)
+            );
+            setErrors({});
+            Alert.alert("Success", "Customer saved successfully!");
+            router.back();
+          },
+        },
+      ]
+    );
     if (validateForm()) {
       const customerRecord = {
         ...formData,
         total_amount: formData.total_amount || 0,
         date: new Date().toISOString(),
       };
-
-      Alert.alert("Success", "Customer record saved successfully!", [
-        {
-          text: "OK",
-          onPress: () => {
-            console.log("Customer Record:", customerRecord);
-            // Here you would typically save to your database or state management
-          },
-        },
-      ]);
     }
   };
 
@@ -157,12 +166,9 @@ const CustomerForm = () => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.form}>
-            <TouchableOpacity
-              style={styles.importButton}
-              onPress={importFromContacts}
-            >
+            <Pressable style={styles.importButton} onPress={importFromContacts}>
               <Text style={styles.importButtonText}>Import from Contacts</Text>
-            </TouchableOpacity>
+            </Pressable>
 
             {/* Avatar Section */}
             <View style={styles.CustomerCard}>
