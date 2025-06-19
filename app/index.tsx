@@ -14,7 +14,7 @@ export default function MyTabs() {
   const colors = useColors();
   return (
     <>
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1}}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarScrollEnabled: false,
@@ -39,6 +39,7 @@ export default function MyTabs() {
           <Tab.Screen name="History" component={HistoryTab} />
           <Tab.Screen name="Pocket" component={PocketTab} />
         </Tab.Navigator>
+
         <CurvedNavBar
           onUserPress={() => console.log("User Pressed")}
           onPlusPress={() => router.push("/add-record")}
